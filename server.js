@@ -8,11 +8,11 @@ var redis = require("redis");
 var secret = require('./lib/secret');
 
 var client = null;
-if(process.env.REDISTOGO_URL) { //heroku
-  client = require('redis-url').connect(process.env.REDISTOGO_URL); 
+if(process.env.REDISTOGO_URL) {
+  client = require('redis-url').connect(process.env.REDISTOGO_URL);
 } else if(config.env == "development") {
   client = redis.createClient();
-}  else { //nodejitsu
+}  else {
   client = redis.createClient(secret.redisPort, secret.redisMachine);
   client.auth(secret.redisAuth, function (err) {
      if (err) { throw err; }
