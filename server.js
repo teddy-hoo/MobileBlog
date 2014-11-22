@@ -25,7 +25,7 @@ var web = require('./web')(app, API);
 var blog = require('./blog')(app, API, blogsdb);
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('login');
 });
 
 server.listen(3000);
