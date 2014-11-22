@@ -23,7 +23,7 @@ var change = function(event, type){
     eval(intervalName + " = setInterval(function(){callSaveToBE(type);}, 1000)");
   }
   var text = event.target.value.trim();
-  if(event.keyCode == 13){
+  if(event.keyCode == 13 && type === "title"){
     saveToBE(type, text);
     type === "title" && event.target.blur();
     window.localStorage.removeItem(blog.name + type);
@@ -36,12 +36,9 @@ var change = function(event, type){
 };
 
 var saveToBE = function(type, text){
-  console.log(blog.name + " " + type + " " + text);
   var key = blog.name + type;
-  ajax("POST", "/blogs/create",
-       {
-         key: text
-       },
+  var data = {key: key, value: text};
+  ajax("POST", API.updateBlog, JSON.stringify(data),
        function(){
          console.log("callback");
        });
@@ -57,5 +54,6 @@ var ajax = function(method, url, data, callback){
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = callback;
   xhr.open(method, url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.send(data);
 };

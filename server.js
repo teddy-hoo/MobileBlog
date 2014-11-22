@@ -4,12 +4,18 @@ var app = express();
 var server = require('http').createServer(app);
 var parseCookie = require('./lib/cookie_parser');
 var config = require('./lib/config');
-var redis = require("redis");
-var secret = require('./lib/secret');
-var mongodb = require('mongodb');
+var API = require('./public/api');
 
-var mongodbServer = new mongodb.Server('localhost', 27017, { auto_reconnect: true, poolSize: 10 });
-var db = new mongodb.Db('blogs', mongodbServer);
+var db = require('monk')('localhost/mobileBlog');
+var blogsdb = db.get('blogs');
+
+blogsdb.insert({ name: 'Tobi', bigdata: {} }, function(){});
+blogsdb.find({ name: 'Loki' }, '-bigdata', function () {
+  // exclude bigdata field
+});
+blogsdb.remove({ name: 'Loki' });
+
+//db.close();
 
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
@@ -47,7 +53,46 @@ app.get('/', function (req, res) {
 app.get('/blogs', function(req, res) {
 });
 
-app.post('/blogs/create', function(req, res) {
+app.post(API.updateBlog, function(req, res) {
+  blogsdb.find({name: req.body.key},
+               'value',
+               function(err, docs){
+                 if(!err){
+                   if(docs === []){
+                     blogsdb.update(
+                       {
+                         name: req.body.key,
+                         value: req.body.value
+                       });
+                     response(res, 201);
+                   }
+                   else {
+                     blogsdb.insert(
+                       {
+                         name: req.body.key,
+                         value: req.body.value
+                       },
+                       function(err, docs){
+                         response(res, err ? 500 : 202);
+                       });
+                   }
+                 }
+                 else {
+                   response(res, 500);
+                 }
+               });
 });
+
+var response = function(res, code){
+  if(code === 500){
+    res.status(500).send("Internal error!");
+  }
+  else if(code === 201){
+    res.status(201).send("Created!");
+  }
+  else if(code === 202){
+    res.status(202).send("Updated!");
+  }
+};
 
 server.listen(process.env.PORT || config.port);
