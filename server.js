@@ -6,6 +6,8 @@ var parseCookie = require('./lib/cookie_parser');
 var config = require('./lib/config');
 var API = require('./public/api');
 
+var web = require('./web')(app, API);
+
 var db = require('monk')('localhost/mobileBlog');
 var blogsdb = db.get('blogs');
 
