@@ -6,18 +6,10 @@ var parseCookie = require('./lib/cookie_parser');
 var config = require('./lib/config');
 var redis = require("redis");
 var secret = require('./lib/secret');
+var mongodb = require('mongodb');
 
-var client = null;
-if(process.env.REDISTOGO_URL) {
-  client = require('redis-url').connect(process.env.REDISTOGO_URL);
-} else if(config.env == "development") {
-  client = redis.createClient();
-}  else {
-  client = redis.createClient(secret.redisPort, secret.redisMachine);
-  client.auth(secret.redisAuth, function (err) {
-     if (err) { throw err; }
-  });
-}
+var mongodbServer = new mongodb.Server('localhost', 27017, { auto_reconnect: true, poolSize: 10 });
+var db = new mongodb.Db('blogs', mongodbServer);
 
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
@@ -52,29 +44,10 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
-app.get('/todos', function(req, res) {
-  client.hgetall("todos", function(err, data) {
-    json(res, data);
-  });
+app.get('/blogs', function(req, res) {
 });
 
-app.post('/todos/create', function(req, res) {
-  var id = guid();
-  client.hset("todos", id, req.body.description);
-
-  json(res, { id: id });
-});
-
-app.post('/todos/update', function(req, res) {
-  client.hset("todos", req.body.id, req.body.description);
-
-  json(res, { });
-});
-
-app.post('/todos/delete', function(req, res) {
-  client.hdel("todos", req.body.id);
-
-  json(res, { });
+app.post('/blogs/create', function(req, res) {
 });
 
 server.listen(process.env.PORT || config.port);

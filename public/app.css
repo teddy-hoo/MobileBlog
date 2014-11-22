@@ -18,6 +18,11 @@
     font-size: 28px;
 }
 
+.nofocuseffect:focus {
+    outline: none;
+    border-style: hidden;
+}
+
 .content {
     height: 500px;
 }

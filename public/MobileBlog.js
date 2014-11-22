@@ -37,10 +37,25 @@ var change = function(event, type){
 
 var saveToBE = function(type, text){
   console.log(blog.name + " " + type + " " + text);
+  var key = blog.name + type;
+  ajax("POST", "/blogs/create",
+       {
+         key: text
+       },
+       function(){
+         console.log("callback");
+       });
   window.localStorage.removeItem(blog.name + type);
 };
 
 var callSaveToBE = function(type){
   var text = window.localStorage.getItem(blog.name + type);
   text && text.trim !== "" && saveToBE(type, text);
+};
+
+var ajax = function(method, url, data, callback){
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = callback;
+  xhr.open(method, url, true);
+  xhr.send(data);
 };
