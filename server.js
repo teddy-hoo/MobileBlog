@@ -20,9 +20,11 @@ app.use(app.router);
 
 var db = require('monk')('localhost/mobileBlog');
 var blogsdb = db.get('blogs');
+var usersdb = db.get('users');
 
 var web = require('./web')(app, API);
 var blog = require('./blog')(app, API, blogsdb);
+var auth = require('./auth')(app, API, usersdb);
 
 app.get('/', function (req, res) {
   res.render('login');

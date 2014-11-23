@@ -9,6 +9,9 @@ module.exports = {
     else if(code === 202){
       res.status(202).send("Updated!");
     }
+    else if(code === 409){
+      res.status(409).send("Conflicted!");
+    }
   },
   json: function(res, data) {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

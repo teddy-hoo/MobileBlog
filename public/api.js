@@ -1,6 +1,7 @@
 var API = {
   updateBlog: "/blogs/update",
-  editBlog: "/edit"
+  editBlog: "/edit",
+  auth: "/auth"
 };
 
 module.exports = API;

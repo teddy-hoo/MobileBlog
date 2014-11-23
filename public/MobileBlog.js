@@ -35,14 +35,14 @@ var change = function(event, type){
     eval(intervalName + " = setInterval(function(){callSaveToBE(type);}, 1000)");
   }
   var text = event.target.value.trim();
-  if(event.keyCode == 13 && type === "title"){
+  if(event.keyCode == 13 && type === "title") {
     saveToBE(type, text);
     type === "title" && event.target.blur();
     window.localStorage.removeItem(blog.name + type);
     eval("clearInterval(" + intervalName + ")");
     eval(intervalName + "= undefined");
   }
-  else{
+  else {
     window.localStorage.setItem(blog.name + type, text);
   }
 };
@@ -64,20 +64,72 @@ var callSaveToBE = function(type){
 //edit
 
 //login
-var validate = function(){
-  var count = 0;
-  return function(validated){
-    count = validated ? count + 1 : count;
-    if(count === 3){
-      console.log();
+
+var validate = (function () {
+  var instance;
+
+  var validateFunc = function(){
+    this.validated = {
+      penName: false,
+      email: false,
+      password: false
+    };
+  };
+
+  validateFunc.prototype.checkAll = function(field, validated){
+    this.validated[field] = validated;
+    if(this.validated.penName &&
+       this.validated.email &&
+       this.validated.password){
+
+      ajax("POST", API.auth,
+           JSON.stringify(this.validated),
+           function(){
+             console.log("callback");
+           });
     }
   };
-};
+
+    function createInstance() {
+      var object = new validateFunc();
+        return object;
+    }
+
+    return function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+    };
+})();
 
 var penNameChange = function(e){
   var penName = e.target.value.trim();
-  if(!penName){
-    return;
+  if(penName){
+    validate().checkAll("penName", penName);
+  }
+  else {
+    validate().checkAll("penName", false);
+  }
+};
+
+var emailChange = function(e){
+  var email = e.target.value.trim();
+  if(email){
+    validate().checkAll("email", email);
+  }
+  else {
+    validate().checkAll("email", false);
+  }
+};
+
+var passwordChange = function(e){
+  var password = e.target.value.trim();
+  if(password){
+    validate().checkAll("password", password);
+  }
+  else {
+    validate().checkAll("password", false);
   }
 };
 //login

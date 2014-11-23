@@ -60,3 +60,20 @@
     top: 130px;
     left: 20px;
 }
+
+.nav {
+    width: 100%;
+    min-height: 50px;
+}
+
+.icon {
+    float: left;
+    font-size: 30px;
+    font-family: 'Helvetica Neue',Helvetica;
+    left: 30px;
+}
+
+.login-btn {
+    float:right;
+    vetical-align: center;
+}
