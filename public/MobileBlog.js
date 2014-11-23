@@ -3,6 +3,15 @@ var saveToBEInterval;
 var saveToBEIntervaltitle;
 var saveToBEIntervalcontent;
 
+//helpers
+var ajax = function(method, url, data, callback){
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = callback;
+  xhr.open(method, url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(data);
+};
+
 var guid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       var r = Math.random() * 16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -10,6 +19,9 @@ var guid = function() {
   });
 };
 
+//helpers
+
+//edit
 var Blog = function(){
   this.name = guid();
 };
@@ -49,11 +61,23 @@ var callSaveToBE = function(type){
   var text = window.localStorage.getItem(blog.name + type);
   text && text.trim !== "" && saveToBE(type, text);
 };
+//edit
 
-var ajax = function(method, url, data, callback){
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = callback;
-  xhr.open(method, url, true);
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhr.send(data);
+//login
+var validate = function(){
+  var count = 0;
+  return function(validated){
+    count = validated ? count + 1 : count;
+    if(count === 3){
+      console.log();
+    }
+  };
 };
+
+var penNameChange = function(e){
+  var penName = e.target.value.trim();
+  if(!penName){
+    return;
+  }
+};
+//login
