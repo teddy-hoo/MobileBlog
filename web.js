@@ -4,4 +4,7 @@ module.exports = function(app, API){
     res.render('edit');
   });
 
+  app.get(API.home, function(req, res){
+    res.render('home');
+  });
 };

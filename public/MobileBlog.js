@@ -85,7 +85,7 @@ var validate = (function () {
       ajax("POST", API.auth,
            JSON.stringify(this.validated),
            function(){
-             console.log("callback");
+             window.location = API.home;
            });
     }
   };
