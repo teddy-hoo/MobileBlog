@@ -14,8 +14,8 @@ var ajax = function(method, url, data, callback){
 
 var guid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16|0, v = c == 'x' ? r : (r&0x3|0x8);
-      return v.toString(16);
+    var r = Math.random() * 16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
   });
 };
 
@@ -78,29 +78,33 @@ var validate = (function () {
 
   validateFunc.prototype.checkAll = function(field, validated){
     this.validated[field] = validated;
+  };
+
+  validateFunc.prototype.login = function(){
     if(this.validated.penName &&
        this.validated.email &&
        this.validated.password){
-
       ajax("POST", API.auth,
            JSON.stringify(this.validated),
-           function(){
-             window.location = API.home;
+           function(event){
+             if(event.currentTarget.readyState === 4){
+               window.location = API.home;
+             }
            });
     }
   };
 
-    function createInstance() {
-      var object = new validateFunc();
-        return object;
-    }
+  function createInstance() {
+    var object = new validateFunc();
+    return object;
+  }
 
-    return function () {
-            if (!instance) {
-                instance = createInstance();
-            }
-            return instance;
-    };
+  return function () {
+    if (!instance) {
+      instance = createInstance();
+    }
+    return instance;
+  };
 })();
 
 var penNameChange = function(e){
@@ -126,10 +130,17 @@ var emailChange = function(e){
 var passwordChange = function(e){
   var password = e.target.value.trim();
   if(password){
+    document.getElementById("loginBtn").style["display"] = "block";
     validate().checkAll("password", password);
   }
   else {
+    document.getElementById("loginBtn").style["display"] = "none";
     validate().checkAll("password", false);
   }
+};
+
+var loginFunc = function(e){
+  e.preventDefault();
+  validate().login();
 };
 //login

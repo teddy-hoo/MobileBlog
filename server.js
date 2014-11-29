@@ -14,7 +14,6 @@ app.use('/public', express.static('public'));
 app.use(express.methodOverride());
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.session({secret: helpers.guid()}));
 
 app.use(app.router);
 
@@ -27,6 +26,9 @@ var blog = require('./blog')(app, API, blogsdb);
 var auth = require('./auth')(app, API, usersdb);
 
 app.get('/', function (req, res) {
+  if(helpers.authenticated(req.cookies)){
+    res.render('home');
+  }
   res.render('login');
 });
 
