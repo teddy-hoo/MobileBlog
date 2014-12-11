@@ -4,7 +4,7 @@ var app = express();
 var server = require('http').createServer(app);
 var parseCookie = require('./lib/cookie_parser');
 var config = require('./lib/config');
-var API = require('./public/api');
+var API = require('./public/js/api');
 var helpers = require('./helpers');
 
 app.set('view engine', 'ejs');

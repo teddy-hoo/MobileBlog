@@ -143,4 +143,8 @@ var loginFunc = function(e){
   e.preventDefault();
   validate().login();
 };
+
+var goWrite = function(){
+  window.location = API.write;
+}
 //login

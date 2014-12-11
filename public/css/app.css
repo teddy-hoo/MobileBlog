@@ -78,6 +78,7 @@
     padding: 10px;
     border-style: hidden;
     background-color: white;
+    cursor: pointer;
 }
 
 .align-left {
@@ -109,4 +110,31 @@
 
 #loginBtn {
     width: 30px;
+}
+
+.section-container {
+    text-align: left;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.title {
+    font-size: large;
+    font-family: KaiTi, 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, 'Lantinghei SC', 'Hiragino Sans GB', 'Microsoft YaHei', "微软雅黑", STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content {
+    margin-top: 10px;
+    font-size: medium;
+    font-family: SimSun;
+    color: #999999;
+}
+
+hr {
+    color: gray;
+    width: 60%;
+    margin: 0px;
 }
