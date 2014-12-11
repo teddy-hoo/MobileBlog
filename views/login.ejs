@@ -1,12 +1,16 @@
 <% include header %>
-<div class="center">
-  <input class="login edit nofocuseffect" placeholder="笔名" type="text" onkeyup="penNameChange(event)"></input>
-</div>
-<div class="center">
-  <input class="login edit nofocuseffect" placeholder="邮箱" type="email" onkeyup="emailChange(event)"></input>
-</div>
-<div class="center">
-  <input class="login edit nofocuseffect" placeholder="密码" type="password" onkeyup="passwordChange(event)"></input>
-  <a id="loginBtn" class="hide" href onclick="loginFunc(event)">login<a>
+<div class="container">
+    <div>
+        <input class="input edit nofocuseffect" placeholder="笔名" type="text" onkeyup="penNameChange(event)">
+    </div>
+    <div>
+        <input class="input edit nofocuseffect" placeholder="邮箱" type="email" onkeyup="emailChange(event)">
+    </div>
+    <div>
+        <input class="input edit nofocuseffect" placeholder="密码" type="password" onkeyup="passwordChange(event)">
+    </div>
+    <div>
+        <input class="input hide" id="loginBtn" type="button" href onclick="loginFunc(event)" value="&#8618">
+    </div>
 </div>
 <% include footer %>

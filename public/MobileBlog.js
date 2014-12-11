@@ -130,7 +130,7 @@ var emailChange = function(e){
 var passwordChange = function(e){
   var password = e.target.value.trim();
   if(password){
-    document.getElementById("loginBtn").style["display"] = "block";
+    document.getElementById("loginBtn").style["display"] = "inline";
     validate().checkAll("password", password);
   }
   else {

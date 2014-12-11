@@ -1,10 +1,12 @@
-module.exports = function(app, API){
+var helpers = require('./helpers');
 
-  app.get(API.editBlog, function(req, res){
-    res.render('edit');
-  });
+module.exports = function (app, API) {
 
-  app.get(API.home, function(req, res){
-    res.render('home');
-  });
+    app.get(API.editBlog, function (req, res) {
+        res.render('edit');
+    });
+
+    app.get(API.home, function (req, res) {
+        res.render(helpers.authenticated(req.cookies) ? 'home' : 'login');
+    });
 };
