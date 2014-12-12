@@ -25,11 +25,4 @@ var web = require('./web')(app, API);
 var blog = require('./blog')(app, API, blogsdb);
 var auth = require('./auth')(app, API, usersdb);
 
-app.get('/', function (req, res) {
-  if(helpers.authenticated(req.cookies)){
-    res.render('home');
-  }
-  res.render('login');
-});
-
 server.listen(3000);
