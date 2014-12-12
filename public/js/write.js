@@ -8,4 +8,10 @@ var title = new MediumEditor('.title', {
 
 var content = new MediumEditor(".content", {
     placeholder: "你的故事"
-})
+});
+
+var blog = document.getElementById("blog");
+
+var publish = function(){
+    console.log(blog.innerHTML);
+};
