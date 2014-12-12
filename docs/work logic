@@ -2,3 +2,16 @@
 2. write cookie
 3. see post / blog
 4. write blog
+
+db schema
+1. user
+    pen name
+    email
+    pass
+2. blog
+    blog title
+    blog content
+    author
+    tag
+    published or not
+    
