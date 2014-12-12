@@ -147,4 +147,7 @@ var loginFunc = function(e){
 var goWrite = function(){
   window.location = API.write;
 }
-//login
+
+var goHome = function(){
+    window.location = '/';
+};
